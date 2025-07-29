@@ -8,7 +8,16 @@
     IMAGE_ENLARGEROOT: 5000
     MOUNT_PROC: 1
     MOUNT_SYS: 1
-  special_modules: []
+  special_modules:
+    - 50-kiauh
+    - 70-node
+    - 74-ratos
+    - 82-klipper_linear_movement_analysis
+    - 86-KlipperScreen
+    - 90-opi_mcu
+    - 94-hotspot
+    - 98-dfu_util
+    - 99-end_services
   rpi_json:
     name: "MainsailOS $VERSION$ - Orange Pi 5 Max (64-bit)"
     description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"

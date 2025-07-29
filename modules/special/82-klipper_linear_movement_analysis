@@ -1,0 +1,41 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+# General settings
+readonly REPO=https://github.com/worksasintended/klipper_linear_movement_analysis.git
+readonly BRANCH=main
+readonly EXTENSION_PATH="/home/${BASE_USER}/klipper_linear_movement_analysis"
+readonly SCRIPT_NAME="linear_movement_vibrations.py"
+
+########################################
+# Clone Repository                     #
+########################################
+
+pushd "/home/${BASE_USER}" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" git clone "${REPO}" klipper_linear_movement_analysis -b "${BRANCH}"
+popd &> /dev/null || exit 1
+
+########################################
+# Register Extension                   #
+########################################
+
+ratos extensions register klipper "linear_movement_analysis" "${EXTENSION_PATH}/${SCRIPT_NAME}"
+sudo -u "${BASE_USER}" /home/"${BASE_USER}"/klippy-env/bin/pip install -v matplotlib
+
+popd &> /dev/null || exit 1

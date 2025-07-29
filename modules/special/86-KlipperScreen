@@ -1,0 +1,54 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+# General settings
+readonly REPO=https://github.com/jordanruthe/KlipperScreen.git
+readonly BRANCH=master
+
+########################################
+# Add Root Rights to X11               #
+########################################
+
+echo needs_root_rights=yes>>/etc/X11/Xwrapper.config
+
+########################################
+# Clone Repository                     #
+########################################
+
+pushd "/home/${BASE_USER}" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" git clone "${REPO}" KlipperScreen -b "${BRANCH}"
+popd &> /dev/null || exit 1
+
+########################################
+# Configure Service                    #
+########################################
+
+pushd "/home/${BASE_USER}/KlipperScreen" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" NETWORK="skipnetworkmanagerinstall" ./scripts/KlipperScreen-install.sh
+
+# Mute output from klipperscreen service
+sed -i 's/\[Service\]/\[Service\]\n\StandardOutput=null\nStandardError=null/g' /etc/systemd/system/KlipperScreen.service
+
+popd &> /dev/null || exit 1
+
+########################################
+# Enable Service                       #
+########################################
+
+systemctl_if_exists enable KlipperScreen.service

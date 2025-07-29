@@ -1,0 +1,97 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+# General settings
+readonly RATOS_CONFIG=https://github.com/Rat-OS/RatOS-configuration.git
+readonly RATOS_CONFIG_BRANCH=v2.1.x
+readonly RATOS_THEMEP=https://github.com/Rat-OS/RatOS-theme.git
+readonly RATOS_THEME_BRANCH=v2.1.x
+readonly RATOS_CONFIGURATOR=https://github.com/Rat-OS/RatOS-configurator.git
+readonly RATOS_CONFIGURATOR_BRANCH=v2.1.x-deployment
+readonly DEPS=(python3-serial python3-opencv)
+
+########################################
+# Install System Packages              #
+########################################
+
+apt-get update --allow-releaseinfo-change
+apt-get install --yes "${DEPS[@]}"
+
+########################################
+# Clone Repositories                   #
+########################################
+
+pushd "/home/${BASE_USER}/printer_data/config" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" git clone "${RATOS_CONFIG}" RatOS -b "${RATOS_CONFIG_BRANCH}"
+sudo -u "${BASE_USER}" git clone "${RATOS_THEME}" .theme -b "${RATOS_THEME_BRANCH}"
+popd &> /dev/null || exit 1
+
+pushd "/home/${BASE_USER}" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" git clone "${RATOS_CONFIGURATOR}" RatOS -b "${RATOS_CONFIGURATOR_BRANCH}"
+popd &> /dev/null || exit 1
+
+########################################
+# Build Config and Install             #
+########################################
+
+cp -TRv /files/ratos/etc/ /etc/
+cp -TRv /files/ratos/var/ /var/
+
+# Set default git merge strategy
+sudo -u pi git config --global pull.ff only
+
+# Create release file
+if [ -f "/etc/ratos_version" ]; then
+    sudo rm -f /etc/ratos_version
+fi
+function get_parent {
+    cat /etc/os-release | grep VERSION_CODENAME | cut -d '=' -f2
+}
+
+echo "${DIST_NAME} v${DIST_VERSION} ($(get_parent))" > "/etc/${DIST_NAME,,}-release"
+if [[ -f "/etc/armbian-release" ]]; then
+    echo_green "Apply release file workaround (armbian based image) ..."
+    ln -s /etc/"${DIST_NAME,,}"-release /etc/aaaa-release
+fi
+if [[ -f "/etc/orangepi-release" ]]; then
+    echo_green "Apply release file workaround (orangepi based image) ..."
+    ln -s /etc/"${DIST_NAME,,}"-release /etc/aaaa-release
+fi
+
+# Install RatOS Configurator
+sudo -u "${BASE_USER}" bash /home/"${BASE_USER}"/ratos-configurator/scripts/setup.sh
+
+# Start the configurator so extensions can access the API
+echo "Starting RatOS Configurator"
+pushd "/home/${BASE_USER}/ratos-configurator" &> /dev/null || exit 1
+sudo -u "${BASE_USER}" npm run start &
+# Wait for configurator to start
+# shellcheck disable=SC2016
+timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:3000)" != "404" ]]; do sleep 5; done' || false
+popd &> /dev/null || exit 1
+
+echo "RATOS CLI SANITY CHECKS"
+echo $PATH
+ls -la /usr/local/bin
+
+# Install RatOS Configuration
+sudo -u "${BASE_USER}" /home/"${BASE_USER}"/printer_data/config/RatOS/scripts/ratos-install.sh
+
+# Create variant file
+echo "${BASE_DISTRO}" > /etc/"${BASE_DISTRO}"-variant

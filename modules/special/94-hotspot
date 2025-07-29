@@ -1,0 +1,89 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+# General settings
+readonly HOTSPOT_NAME=RatOS
+readonly HOTSPOT_PASSWORD=orangepi
+readonly HOTSPOT_CHANNEL=6
+readonly DEPS=(iw hostapd dnsmasq iptables)
+
+########################################
+# Install System Packages              #
+########################################
+
+apt-get update --allow-releaseinfo-change
+apt-get -y purge dns-root-data
+apt-get install --yes "${DEPS[@]}"
+
+########################################
+# Disable Services                     #
+########################################
+
+systemctl disable hostapd
+systemctl disable dnsmasq
+
+########################################
+# Copy Hotspot Files to Filesystem     #
+########################################
+
+cp -TRv /files/hotspot/etc/ /etc/
+cp -TRv /files/hotspot/usr/ /usr/
+
+########################################
+# Configure Hotspot                    #
+########################################
+
+sed -i s"/HOTSPOT_NAME/$HOTSPOT_NAME/g" /etc/hostapd/hostapd.conf
+sed -i s"/HOTSPOT_PASSWORD/$HOTSPOT_PASSWORD/g" /etc/hostapd/hostapd.conf
+sed -i s"/HOTSPOT_CHANNEL/$HOTSPOT_CHANNEL/g" /etc/hostapd/hostapd.conf
+
+if grep -Fxq "DAEMON_CONF" /etc/default/hostapd
+then
+    sed -i "s@#DAEMON_CONF=\"\"@DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"@g" /etc/default/hostapd
+else
+    echo DAEMON_CONF=\"/etc/hostapd/hostapd.conf\" >> /etc/default/hostapd
+fi
+
+sed -i "s@^DAEMON_OPTS=\"\"@^#DAEMON_OPTS=\"\"@g" /etc/default/hostapd
+
+if [ -f /etc/dhcpcd.conf ]; then
+  sed -i 's/clientid/# clientid/g' /etc/dhcpcd.conf
+fi
+
+echo "
+# Auto-hotspot Config
+# Interface to use
+interface=wlan0
+bind-interfaces
+dhcp-range=192.168.50.150,192.168.50.200,255.255.255.0,12h
+
+" >> /etc/dnsmasq.conf
+
+sed -i 's/net.ipv4.ip_forward=1/#net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+
+cp /etc/network/interfaces /etc/network/interfaces-backup
+echo "" > /etc/network/interfaces
+
+popd &> /dev/null || exit 1
+
+########################################
+# Enable Service                       #
+########################################
+
+systemctl_if_exists enable autohotspot.service

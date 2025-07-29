@@ -1,0 +1,42 @@
+#!/bin/bash
+set -xe
+export LC_ALL=C
+
+########################################
+# Functions and Basic Configuration    #
+########################################
+
+# Load common functions and set up cleanup trap
+source /common.sh
+install_cleanup_trap
+
+# Load additional configuration (e.g., BASE_USER)
+source /files/00-config
+
+########################################
+# Configuration                        #
+########################################
+
+pushd "/home/${BASE_USER}/klipper" &> /dev/null || exit 1
+cp -f /files/opi_mcu/opi_mcu.config /home/pi/klipper/.config
+make olddefconfig
+make clean
+chown pi:pi -R /home/pi/klipper
+
+########################################
+# Installation                         #
+########################################
+
+make flash
+popd &> /dev/null || exit 1
+
+pushd "/home/${BASE_USER}/klipper" &> /dev/null || exit 1
+cp "./scripts/klipper-mcu.service" /etc/systemd/system/klipper_mcu.service
+chown pi:pi -R /home/pi/klipper
+popd &> /dev/null || exit 1
+
+########################################
+# Enable Service                       #
+########################################
+
+systemctl_if_exists enable klipper_mcu.service
