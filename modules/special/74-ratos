@@ -22,7 +22,7 @@ readonly RATOS_CONFIG=https://github.com/Rat-OS/RatOS-configuration.git
 readonly RATOS_CONFIG_BRANCH=v2.1.x
 readonly RATOS_THEME=https://github.com/Rat-OS/RatOS-theme.git
 readonly RATOS_THEME_BRANCH=v2.1.x
-readonly RATOS_CONFIGURATOR=https://github.com/tg73/RatOS-configurator.git
+readonly RATOS_CONFIGURATOR=https://github.com/theimmortal68/RatOS-configurator.git
 readonly RATOS_CONFIGURATOR_BRANCH=topic/first-layer-improvements-pr 
 readonly DEPS=(python3-serial python3-opencv)
 
