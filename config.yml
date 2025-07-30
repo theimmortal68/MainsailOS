@@ -1,7 +1,7 @@
 - name: armbian-orangepi5_max-bookworm
   type: armbian
-  img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250729-2112/armbian-orangepi5_max_bookworm.img.xz"
-  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250729-2112/armbian-orangepi5_max_bookworm.img.sha256"
+  img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz"
+  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz.sha256"
   env:
     ARCH: arm64
     DISTRO: armbian
@@ -28,7 +28,7 @@
 - name: armbian-orangepi5_max-noble
   type: armbian
   img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz"
-  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.sha256"
+  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz.sha256"
   env:
     ARCH: arm64
     DISTRO: armbian
