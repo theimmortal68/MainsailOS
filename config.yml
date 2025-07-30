@@ -1,37 +1,64 @@
-- name: armbian-orangepi5_max-bookworm
-  type: armbian
-  img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz"
-  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz.sha256"
-  env:
-    ARCH: arm64
-    DISTRO: armbian
-    IMAGE_ENLARGEROOT: 6500
-    MOUNT_PROC: 1
-    MOUNT_SYS: 1
-  special_modules:
-    - 50-kiauh
-    - 70-node
-    - 74-ratos
-    - 82-klipper_linear_movement_analysis
-    - 86-KlipperScreen
-    - 90-opi_mcu
-    - 94-hotspot
-    - 98-dfu_util
-    - 99-end_services
-  rpi_json:
-    name: "MainsailOS $VERSION$ - Orange Pi 5 Max (64-bit)"
-    description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
-    icon: "https://os.mainsail.xyz/rpi-imager.png"
-    devices:
-      - "opi5max-64bit"
+# - name: armbian-orangepi5_max-bookworm
+#   type: armbian
+#   img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz"
+#   img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_bookworm.img.xz.sha256"
+#   env:
+#     ARCH: arm64
+#     DISTRO: armbian
+#     IMAGE_ENLARGEROOT: 6500
+#     MOUNT_PROC: 1
+#     MOUNT_SYS: 1
+#   special_modules:
+#     - 50-kiauh
+#     - 70-node
+#     - 74-ratos
+#     - 82-klipper_linear_movement_analysis
+#     - 86-KlipperScreen
+#     - 90-opi_mcu
+#     - 94-hotspot
+#     - 98-dfu_util
+#     - 99-end_services
+#   rpi_json:
+#     name: "MainsailOS $VERSION$ - Orange Pi 5 Max (64-bit)"
+#     description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+#     icon: "https://os.mainsail.xyz/rpi-imager.png"
+#     devices:
+#       - "opi5max-64bit"
 
-- name: armbian-orangepi5_max-noble
-  type: armbian
-  img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz"
-  img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz.sha256"
+# - name: armbian-orangepi5_max-noble
+#   type: armbian
+#   img_download_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz"
+#   img_hash_url: "https://github.com/theimmortal68/armbian-builds/releases/download/20250730-1354/armbian-orangepi5_max_noble.img.xz.sha256"
+#   env:
+#     ARCH: arm64
+#     DISTRO: armbian
+#     IMAGE_ENLARGEROOT: 6500
+#     MOUNT_PROC: 1
+#     MOUNT_SYS: 1
+#   special_modules:
+#     - 50-kiauh
+#     - 70-node
+#     - 74-ratos
+#     - 82-klipper_linear_movement_analysis
+#     - 86-KlipperScreen
+#     - 90-opi_mcu
+#     - 94-hotspot
+#     - 98-dfu_util
+#     - 99-end_services
+#   rpi_json:
+#     name: "MainsailOS $VERSION$ - Orange Pi 5 Max (64-bit)"
+#     description: "A port of Armbian with preinstalled Klipper/Moonraker/Mainsail for 3D printers"
+#     icon: "https://os.mainsail.xyz/rpi-imager.png"
+#     devices:
+#       - "opi5max-64bit"
+
+- name: ubuntu-rockchip-orangepi5_max-noble
+  type: ubuntu
+  img_download_url: "https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.4.0/ubuntu-24.04-preinstalled-server-arm64-orangepi-5-max.img.xz"
+  img_hash_url: "https://github.com/Joshua-Riek/ubuntu-rockchip/releases/download/v2.4.0/ubuntu-24.04-preinstalled-server-arm64-orangepi-5-max.img.xz.sha256"
   env:
     ARCH: arm64
-    DISTRO: armbian
+    DISTRO: ubuntu
     IMAGE_ENLARGEROOT: 6500
     MOUNT_PROC: 1
     MOUNT_SYS: 1
@@ -51,3 +78,4 @@
     icon: "https://os.mainsail.xyz/rpi-imager.png"
     devices:
       - "opi5max-64bit"
+      
