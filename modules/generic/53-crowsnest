@@ -37,7 +37,7 @@ apt-get install --yes "${DEPS[@]}"
 ########################################
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone --depth 1 --single-branch ${BRANCH} ${REPO} crowsnest
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch --branch ${BRANCH} ${REPO} crowsnest
 popd &> /dev/null || exit 1
 
 ########################################

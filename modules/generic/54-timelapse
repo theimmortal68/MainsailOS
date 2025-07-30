@@ -40,7 +40,7 @@ pushd /home/"${BASE_USER}" &> /dev/null || exit 1
 # Clone repository                     #
 ########################################
 
-sudo -u "${BASE_USER}" git clone --depth 1 --single-branch ${BRANCH} ${REPO} "${SRC_DIR}"
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch --branch ${BRANCH} ${REPO} "${SRC_DIR}"
 
 ########################################
 # Link component in Moonraker          #

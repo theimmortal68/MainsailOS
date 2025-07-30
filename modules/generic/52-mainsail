@@ -80,7 +80,7 @@ chmod g+x /home/"${BASE_USER}"
 ########################################
 
 echo "Installing mainsail.cfg"
-sudo -u "${BASE_USER}" git clone --depth 1 --single-branch ${BRANCH} ${CONFIG_REPO} mainsail-config
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch --branch ${BRANCH} ${CONFIG_REPO} mainsail-config
 ln -sf /home/"${BASE_USER}"/mainsail-config/mainsail.cfg /home/"${BASE_USER}"/printer_data/config/mainsail.cfg
 
 ########################################
