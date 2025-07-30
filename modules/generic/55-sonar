@@ -14,6 +14,15 @@ install_cleanup_trap
 source /files/00-config
 
 ########################################
+# Set DEBIAN_FRONTEND to               #
+# noninteractive                       #
+########################################
+
+if [[ "${DEBIAN_FRONTEND}" != "noninteractive" ]]; then
+    export DEBIAN_FRONTEND=noninteractive
+fi
+
+########################################
 # Configuration                        #
 ########################################
 
