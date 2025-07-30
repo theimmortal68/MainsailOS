@@ -32,7 +32,7 @@ echo needs_root_rights=yes>>/etc/X11/Xwrapper.config
 ########################################
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${REPO}" KlipperScreen -b "${BRANCH}"
+sudo -u "${BASE_USER}" git clone "${REPO}" KlipperScreen --depth 1 --single-branch -b "${BRANCH}"
 popd &> /dev/null || exit 1
 
 ########################################

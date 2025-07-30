@@ -18,6 +18,7 @@ source /files/00-config
 ########################################
 
 REPO="https://github.com/mainsail-crew/moonraker-timelapse.git"
+BRANCH="main"
 SRC_DIR="/home/${BASE_USER}/moonraker-timelapse"
 MOONRAKER_COMPONENTS_PATH="/home/${BASE_USER}/moonraker/moonraker/components"
 PRINTER_CONFIG_PATH="/home/${BASE_USER}/printer_data/config"
@@ -39,7 +40,7 @@ pushd /home/"${BASE_USER}" &> /dev/null || exit 1
 # Clone repository                     #
 ########################################
 
-sudo -u "${BASE_USER}" git clone ${REPO} "${SRC_DIR}"
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch ${BRANCH} ${REPO} "${SRC_DIR}"
 
 ########################################
 # Link component in Moonraker          #

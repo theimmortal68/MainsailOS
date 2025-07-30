@@ -33,7 +33,7 @@ apt-get install --yes "${DEPS[@]}"
 ########################################
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${REPO}" dfu-util -b "${BRANCH}"
+sudo -u "${BASE_USER}" git clone "${REPO}" dfu-util --depth 1 --single-branch -b "${BRANCH}"
 popd &> /dev/null || exit 1
 
 ########################################

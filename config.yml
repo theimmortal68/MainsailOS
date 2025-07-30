@@ -5,7 +5,7 @@
   env:
     ARCH: arm64
     DISTRO: armbian
-    IMAGE_ENLARGEROOT: 8000
+    IMAGE_ENLARGEROOT: 6500
     MOUNT_PROC: 1
     MOUNT_SYS: 1
   special_modules:
@@ -32,7 +32,7 @@
   env:
     ARCH: arm64
     DISTRO: armbian
-    IMAGE_ENLARGEROOT: 8000
+    IMAGE_ENLARGEROOT: 6500
     MOUNT_PROC: 1
     MOUNT_SYS: 1
   special_modules:

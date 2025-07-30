@@ -64,3 +64,5 @@ if [ "$(pgrep -f -c "KlipperScreen")" -gt 0 ]; then
 fi
 
 echo "List out all running processes"
+
+apt-get autoremove --yes

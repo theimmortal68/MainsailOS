@@ -38,12 +38,12 @@ apt-get install --yes "${DEPS[@]}"
 ########################################
 
 pushd "/home/${BASE_USER}/printer_data/config" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${RATOS_CONFIG}" RatOS -b "${RATOS_CONFIG_BRANCH}"
-sudo -u "${BASE_USER}" git clone "${RATOS_THEME}" .theme -b "${RATOS_THEME_BRANCH}"
+sudo -u "${BASE_USER}" git clone "${RATOS_CONFIG}" RatOS --depth 1 --single-branch -b "${RATOS_CONFIG_BRANCH}"
+sudo -u "${BASE_USER}" git clone "${RATOS_THEME}" .theme --depth 1 --single-branch -b "${RATOS_THEME_BRANCH}"
 popd &> /dev/null || exit 1
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${RATOS_CONFIGURATOR}" ratos-configurator -b "${RATOS_CONFIGURATOR_BRANCH}"
+sudo -u "${BASE_USER}" git clone "${RATOS_CONFIGURATOR}" ratos-configurator --depth 1 --single-branch -b "${RATOS_CONFIGURATOR_BRANCH}"
 popd &> /dev/null || exit 1
 
 ########################################

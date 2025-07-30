@@ -28,7 +28,7 @@ readonly SCRIPT_NAME="linear_movement_vibrations.py"
 ########################################
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${REPO}" klipper_linear_movement_analysis -b "${BRANCH}"
+sudo -u "${BASE_USER}" git clone "${REPO}" klipper_linear_movement_analysis --depth 1 --single-branch -b "${BRANCH}"
 popd &> /dev/null || exit 1
 
 ########################################

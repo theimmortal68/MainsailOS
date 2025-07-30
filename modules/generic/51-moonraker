@@ -18,6 +18,7 @@ source /files/00-config
 ########################################
 
 REPO="https://github.com/Arksine/moonraker.git"
+BRANCH="master"
 DEPS="git"
 
 ########################################
@@ -37,7 +38,7 @@ pushd "/home/${BASE_USER}" &> /dev/null || exit 1
 ########################################
 
 echo "Cloning Repository"
-sudo -u "${BASE_USER}" git clone ${REPO} moonraker
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch --branch ${BRANCH} ${REPO} moonraker
 
 ########################################
 # Create printer_data directories      #

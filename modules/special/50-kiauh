@@ -18,6 +18,7 @@ source /files/00-config
 ########################################
 
 REPO="https://github.com/dw-0/kiauh"
+BRANCH="master"
 DEPS="git"
 
 ########################################
@@ -37,7 +38,7 @@ pushd "/home/${BASE_USER}" &> /dev/null || exit 1
 ########################################
 
 echo "Cloning Repository"
-sudo -u "${BASE_USER}" git clone ${REPO} kiauh
+sudo -u "${BASE_USER}" git clone --depth 1 --single-branch ${BRANCH} ${REPO} kiauh
 
 ########################################
 # Return to saved directory            #
