@@ -38,4 +38,6 @@ if ! which pnpm &> /dev/null; then
         exit 1
 fi
 
+npm install -g npm@11.5.1
+
 popd &> /dev/null || exit 1
