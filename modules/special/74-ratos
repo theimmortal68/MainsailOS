@@ -43,7 +43,7 @@ sudo -u "${BASE_USER}" git clone "${RATOS_THEME}" .theme -b "${RATOS_THEME_BRANC
 popd &> /dev/null || exit 1
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" git clone "${RATOS_CONFIGURATOR}" RatOS -b "${RATOS_CONFIGURATOR_BRANCH}"
+sudo -u "${BASE_USER}" git clone "${RATOS_CONFIGURATOR}" ratos-configurator -b "${RATOS_CONFIGURATOR_BRANCH}"
 popd &> /dev/null || exit 1
 
 ########################################
