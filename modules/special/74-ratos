@@ -65,14 +65,6 @@ function get_parent {
 }
 
 echo "${DIST_NAME} v${DIST_VERSION} ($(get_parent))" > "/etc/${DIST_NAME,,}-release"
-if [[ -f "/etc/armbian-release" ]]; then
-    echo_green "Apply release file workaround (armbian based image) ..."
-    ln -s /etc/"${DIST_NAME,,}"-release /etc/aaaa-release
-fi
-if [[ -f "/etc/orangepi-release" ]]; then
-    echo_green "Apply release file workaround (orangepi based image) ..."
-    ln -s /etc/"${DIST_NAME,,}"-release /etc/aaaa-release
-fi
 
 # Install RatOS Configurator
 sudo -u "${BASE_USER}" bash /home/"${BASE_USER}"/ratos-configurator/scripts/setup.sh
