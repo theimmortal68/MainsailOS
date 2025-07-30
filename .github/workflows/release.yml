@@ -216,9 +216,11 @@ jobs:
       - name: "🛠 Compressing Image"
         working-directory: ./build
         run: |
+          apt-get install --yes 7zip
           CPU_COUNT="$(nproc)"
-          echo -e "\e[32mUsing ${CPU_COUNT} Cores for compression...\e[0m"
-          xz -efkvz9T"${CPU_COUNT}" ${{ env.IMAGE }} || true
+          echo -e "\e[32mUsing ${CPU_COUNT} Cores for compression...\e[0m"          
+          #xz -efkvz9T"${CPU_COUNT}" ${{ env.IMAGE }} || true
+          7z a -t7z -mmt"${CPU_COUNT}" -mx9 -y ${{ env.IMAGE }}.7z ${{ env.IMAGE }}
 
       - name: "🔐 Create hash"
         id: hashes
@@ -228,8 +230,8 @@ jobs:
           image_checksum=`cat ${{ env.IMAGE }}.sha256 | awk '{ print $1 }'`
           echo "image=${image_checksum}" >> $GITHUB_OUTPUT
 
-          sha256sum ${{ env.IMAGE }}.xz > ${{ env.IMAGE }}.xz.sha256
-          zip_checksum=`cat ${{ env.IMAGE }}.xz.sha256 | awk '{ print $1 }'`
+          sha256sum ${{ env.IMAGE }}.7z > ${{ env.IMAGE }}.7z.sha256
+          zip_checksum=`cat ${{ env.IMAGE }}.7z.sha256 | awk '{ print $1 }'`
           echo "zip=${zip_checksum}" >> $GITHUB_OUTPUT
 
       - name: "Calculating filesizes"
@@ -239,7 +241,7 @@ jobs:
           image_filesize=`wc -c ${{ env.IMAGE }} | awk '{print $1}'`
           echo "image=${image_filesize}" >> $GITHUB_OUTPUT
 
-          zip_filesize=`wc -c ${{ env.IMAGE }}.xz | awk '{print $1}'`
+          zip_filesize=`wc -c ${{ env.IMAGE }}.7z | awk '{print $1}'`
           echo "zip=${zip_filesize}" >> $GITHUB_OUTPUT
 
       - name: "🔧 Generate RPI JSON file"
@@ -260,7 +262,7 @@ jobs:
           # replace $VERSION$ in name
           rpi_data['name'] = rpi_data['name'].replace('$VERSION$', "${{ env.RELEASE_TAG }}")
 
-          filename = "${{ env.IMAGE }}.xz"
+          filename = "${{ env.IMAGE }}.7z"
           repo = "${{ github.repository }}"
           release_tag = "${{ env.RELEASE_TAG }}"
           rpi_data['url'] = f"https://github.com/{repo}/releases/download/{release_tag}/{filename}"
@@ -282,8 +284,8 @@ jobs:
           TAG="${{ env.RELEASE_TAG }}"
 
           gh release upload "$TAG" "build/${{ env.IMAGE }}.sha256" --clobber
-          gh release upload "$TAG" "build/${{ env.IMAGE }}.xz" --clobber
-          gh release upload "$TAG" "build/${{ env.IMAGE }}.xz.sha256" --clobber
+          gh release upload "$TAG" "build/${{ env.IMAGE }}.7z" --clobber
+          gh release upload "$TAG" "build/${{ env.IMAGE }}.7z.sha256" --clobber
 
           if [ -f "build/${{ env.IMAGE }}.json" ]; then
             gh release upload "$TAG" "build/${{ env.IMAGE }}.json" --clobber
