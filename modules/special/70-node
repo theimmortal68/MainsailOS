@@ -29,8 +29,8 @@ chmod 777 /tmp
 ########################################
 
 pushd "/home/${BASE_USER}" &> /dev/null || exit 1
-curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &&\
-apt update && apt install nodejs -y
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash - &&\
+sudo apt-get install -y nodejs
 
 npm install -g pnpm
 if ! which pnpm &> /dev/null; then
