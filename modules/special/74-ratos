@@ -23,7 +23,7 @@ readonly RATOS_CONFIG_BRANCH=v2.1.x
 readonly RATOS_THEME=https://github.com/Rat-OS/RatOS-theme.git
 readonly RATOS_THEME_BRANCH=v2.1.x
 readonly RATOS_CONFIGURATOR=https://github.com/Rat-OS/RatOS-configurator.git
-readonly RATOS_CONFIGURATOR_BRANCH=development 
+readonly RATOS_CONFIGURATOR_BRANCH=2.1.x
 readonly DEPS=(python3-serial python3-opencv)
 
 ########################################
@@ -71,7 +71,7 @@ sudo -u "${BASE_USER}" bash /home/"${BASE_USER}"/ratos-configurator/src/scripts/
 
 # Start the configurator so extensions can access the API
 echo "Starting RatOS Configurator"
-pushd "/home/${BASE_USER}/ratos-configurator/src" &> /dev/null || exit 1
+pushd "/home/${BASE_USER}/ratos-configurator" &> /dev/null || exit 1
 sudo -u "${BASE_USER}" npm run start &
 # Wait for configurator to start
 # shellcheck disable=SC2016
