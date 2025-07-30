@@ -19,7 +19,7 @@ source /files/00-config
 
 # General settings
 readonly RATOS_CONFIG=https://github.com/Rat-OS/RatOS-configuration.git
-readonly RATOS_CONFIG_BRANCH=dev-development
+readonly RATOS_CONFIG_BRANCH=v2.1.x 
 readonly RATOS_THEME=https://github.com/Rat-OS/RatOS-theme.git
 readonly RATOS_THEME_BRANCH=v2.1.x 
 readonly RATOS_CONFIGURATOR=https://github.com/Rat-OS/RatOS-configurator.git
@@ -67,11 +67,10 @@ function get_parent {
 echo "${DIST_NAME} v${DIST_VERSION} ($(get_parent))" > "/etc/${DIST_NAME,,}-release"
 
 # Install RatOS Configurator
-sudo -u "${BASE_USER}" bash /home/"${BASE_USER}"/ratos-configurator/src/scripts/setup.sh
+sudo -u "${BASE_USER}" bash /home/"${BASE_USER}"/ratos-configurator/app/scripts/setup.sh
 # Start the configurator so extensions can access the API
 echo "Starting RatOS Configurator"
-pushd "/home/${BASE_USER}/ratos-configurator/src" &> /dev/null || exit 1
-sudo -u "${BASE_USER}" npm run build
+pushd "/home/${BASE_USER}/ratos-configurator/app" &> /dev/null || exit 1
 sudo -u "${BASE_USER}" npm run start &
 # Wait for configurator to start
 # shellcheck disable=SC2016
@@ -83,7 +82,7 @@ echo $PATH
 ls -la /usr/local/bin
 
 # Install RatOS Configuration
-sudo -u "${BASE_USER}" /home/"${BASE_USER}"/ratos-configurator/configuration/scripts/ratos-install.sh
+sudo -u "${BASE_USER}" //home/"${BASE_USER}"/printer_data/config/RatOS/scripts/ratos-install.sh
 
 # Create variant file
 echo "${BASE_DISTRO}" > /etc/"${BASE_DISTRO}"-variant
