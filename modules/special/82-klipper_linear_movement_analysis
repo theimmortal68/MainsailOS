@@ -37,5 +37,3 @@ popd &> /dev/null || exit 1
 
 ratos extensions register klipper "linear_movement_analysis" "${EXTENSION_PATH}/${SCRIPT_NAME}"
 sudo -u "${BASE_USER}" /home/"${BASE_USER}"/klippy-env/bin/pip install -v matplotlib
-
-popd &> /dev/null || exit 1
