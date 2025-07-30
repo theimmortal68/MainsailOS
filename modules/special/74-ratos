@@ -20,7 +20,7 @@ source /files/00-config
 # General settings
 readonly RATOS_CONFIG=https://github.com/Rat-OS/RatOS-configuration.git
 readonly RATOS_CONFIG_BRANCH=v2.1.x
-readonly RATOS_THEMEP=https://github.com/Rat-OS/RatOS-theme.git
+readonly RATOS_THEME=https://github.com/Rat-OS/RatOS-theme.git
 readonly RATOS_THEME_BRANCH=v2.1.x
 readonly RATOS_CONFIGURATOR=https://github.com/Rat-OS/RatOS-configurator.git
 readonly RATOS_CONFIGURATOR_BRANCH=development 
